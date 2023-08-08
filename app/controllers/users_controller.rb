@@ -3,10 +3,12 @@ class AccountsController < ApplicationController
     
     def index
         # user dashboard(posts)
-        @posts = Post.active
+        @posts = Post
     end   
     
     def show
         # user profile
     end 
+
+  
 end

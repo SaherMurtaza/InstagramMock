@@ -18,7 +18,7 @@ class PostsController < ApplicationController
   def edit
   end
 
-  # POST /posts or /books.json
+  # POST /posts or /posts.json
   def create
     @post = Post.new(post_params.merge(account_id: current_account.id))
 
@@ -44,7 +44,7 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
-  end
+  end                            
 
   # DELETE /posts/1 or /posts/1.json
   def destroy
@@ -64,6 +64,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:active)
+      params.require(:post).permit(:active, images: [])
     end
+
 end
