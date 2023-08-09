@@ -1,11 +1,7 @@
-<h1> Posts </h1>
   <p>
-    <strong>Post:</strong>
     <% if post.present? %>
       <%= image_tag post.images.variant(resize_to_limit: [600, 600]) %>
     <% end %>
-
-
   </p> 
   <p>
     <strong>Content:</strong>

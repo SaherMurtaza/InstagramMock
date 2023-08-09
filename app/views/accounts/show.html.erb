@@ -1,1 +1,12 @@
 <h1> this is user's Profile page</h1>
+<br>
+<h2>Your profile details</h2>
+<p>Name: <%= @account.name %></p>
+<p>Email: <%= @account.email %></p>
+<p>Profile Privacy: <%= @account.profile_privacy.capitalize %></p>
+<br>
+<br>
+<h2>Posts</h2>
+<% @posts.each do |post| %>
+  <%= render post %>
+<% end %> 

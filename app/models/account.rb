@@ -12,6 +12,27 @@ class Account < ApplicationRecord
   has_many :following_accounts, foreign_key: :followee_id, class_name: "Relationship"
   has_many :followers, through: :following_accounts, dependent: :destroy, source: :followed
 
+  enum profile_privacy: { public: 0, private: 1 }, _prefix: :profile
+
+  scope :public_accounts_with_most_followers, lambda {
+    where(profile_privacy: :public)
+      .joins(:followers)
+      .group('accounts.id')
+      .order('COUNT(accounts.id) DESC')
+      .limit(10)
+  }
+  
+  def visible_posts(current_account)
+    if profile_privacy == 'public'
+      Post.where(account_id: id)
+    elsif profile_privacy == 'private'
+      if current_account && (current_account == self || current_account.followers?(self))
+        Post.where(account_id: id)
+      else
+        Post.none
+      end
+    end
+  end
   protected
     def password_required?
       confirmed? ? super : false
