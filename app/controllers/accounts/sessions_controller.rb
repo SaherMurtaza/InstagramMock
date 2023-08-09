@@ -15,7 +15,7 @@ class Accounts::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   # def destroy
-  #   super
+  #   redirect_to new_account_session_path 
   # end
 
   # protected

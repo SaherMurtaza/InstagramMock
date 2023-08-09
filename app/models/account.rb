@@ -1,22 +1,21 @@
 class Account < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable
   
-  has_many :posts
+  has_many :posts, dependent: :destroy
   has_many :likes
-  has_many :comments       
+  has_many :comments    
+  has_many :followed_accounts, foreign_key: :follower_id, class_name: "Relationship"
+  has_many :followees, through: :followed_accounts, dependent: :destroy, source: :follower
+
+  has_many :following_accounts, foreign_key: :followee_id, class_name: "Relationship"
+  has_many :followers, through: :following_accounts, dependent: :destroy, source: :followed
+
   protected
     def password_required?
       confirmed? ? super : false
     end
-    # describe '#set_reset_password_token' do
-    #   it 'returns the plaintext token' do
-    #     potential_token = subject.send(:set_reset_password_token)
-    #     potential_token_digest = Devise.token_generator.digest(subject, :reset_password_token, potential_token)
-    #     actual_token_digest = subject.reset_password_token
-    #     expect(potential_token_digest).to eql(actual_token_digest)
-    #   end
-    # end
+
+
 end

@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
 
-  root 'public#index'
+  root 'accounts#index'
   get '/confirmation_pending' => 'public#after_registration_path'
-  get '/users' => 'users#index'
 
   devise_for :accounts, controllers: { 
     confirmations: 'accounts/confirmations',
@@ -14,7 +13,7 @@ Rails.application.routes.draw do
   resources :posts do
     resources :comments
   end
-  # resources :users, only: [:index, :show]
+  resources :accounts, only: [:show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")

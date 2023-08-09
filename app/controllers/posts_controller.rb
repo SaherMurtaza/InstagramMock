@@ -7,6 +7,7 @@ class PostsController < ApplicationController
 
   # GET /posts/1 or /posts/1.json
   def show
+    @post = current_account.posts.find(params[:id])
   end
 
   # GET /posts/new
@@ -31,6 +32,7 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+    
   end
 
   # PATCH/PUT /posts/1 or /posts/1.json
@@ -64,7 +66,7 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:active, images: [])
+      params.require(:post).permit(:active, :content, :images)
     end
 
 end
