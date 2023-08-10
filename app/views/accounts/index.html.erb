@@ -1,19 +1,17 @@
 <h1> this is user's Home page</h1>
-<h2> Recommended Posts </h2>
-
-<%# <% @posts.each do |post| %> 
-  <%# <%= render post %> 
-<%# <% end %>   
-
 <% if @suggested_posts %>
   <h1>Suggested for you</h1>
+  <p> hello outside loop</p>
+  <%= @suggested_posts %>
   <% @suggested_posts.each do |post| %>
     <div class="post">
+      <p> hello inside index</p>
       <%= render post %>
     </div>
   <% end %>
 <% else %>
   <h1>Your Following Posts</h1>
+  <%= @following_posts %>
   <% @following_posts.each do |post| %>
     <div class="post">
       <%= render post %>
@@ -21,9 +19,5 @@
   <% end %>
 <% end %>
 
-
-
 <%= button_to 'Sign Out', destroy_account_session_path, method: :delete,
   form: {data: {turbo_confirm: 'Are you sure?'}} %>
-
-
