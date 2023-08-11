@@ -1,10 +1,6 @@
 <%= render @post %>
-<%# <%= render partial: 'post', locals: { post: @post } %>
-
-
 <div>
   <%= link_to "Edit this post", edit_post_path(@post) %> <br>
   <%= link_to "Back to posts", posts_path %>
-
   <%= button_to "Destroy this post", @post, method: :delete %>
 </div>
