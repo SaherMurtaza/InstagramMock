@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -18,10 +18,11 @@
     <% if alert %>
       <p class="alert"><%= alert %></p>
     <% end %>
-   
+
     <%= render "shared/navbar" if current_account%>
     <div class="container">
+      <%= turbo_frame_tag "modal" %>
       <%= yield %>
-    </div>  
+    </div>
   </body>
 </html>

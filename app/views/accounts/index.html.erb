@@ -1,7 +1,6 @@
 <h1> this is user's Home page</h1>
 <% if @suggested_posts %>
   <h1>Suggested for you</h1>
-  <p> hello outside loop</p>
   <%= @suggested_posts %>
   <% @suggested_posts.each do |post| %>
     <div class="post">

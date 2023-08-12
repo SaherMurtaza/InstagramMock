@@ -1,0 +1,10 @@
+<%# <%byebug%> %>
+<%= form_with model: post, method: :patch, local: true do |f| %>
+  <!-- Form fields for editing the post -->
+  <%= f.label :caption %>
+  <%= f.text_area :caption, class: "form-control" %>
+
+  <%= f.label :location %>
+  <%= f.text_field :location, class: "form-control" %>
+
+<% end %>

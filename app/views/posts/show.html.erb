@@ -1,6 +1,10 @@
 <%= render @post %>
+<!-- Display like count -->
+<p class="like-count"><%= @post.likes.count %></p>
+<!-- Link/button for liking/unliking -->
+
 <div>
-  <%= link_to "Edit this post", edit_post_path(@post) %> <br>
+  <%= link_to "Edit this post", edit_post_path(@post), data: {turbo_frame: "modal"} %> <br>
   <%= link_to "Back to posts", posts_path %>
   <%= button_to "Destroy this post", @post, method: :delete %>
 </div>

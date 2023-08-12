@@ -1,10 +1,9 @@
-<p> hello inside _post</p>
 <p>
   <% if post.present? %>
     <%= image_tag post.images.representation(resize_to_limit: [600, 600]) %>
   <% end %>
 </p> 
 <p>
-  <strong>Content:</strong>
-  <%= post.content %>
+  <strong>Caption:</strong>
+  <%= post.caption %>
 </p>

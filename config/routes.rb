@@ -8,14 +8,12 @@ Rails.application.routes.draw do
     registrations: 'accounts/registrations',
     sessions: 'accounts/sessions',
     passwords: 'accounts/passwords',
-   }
+  }
 
   resources :posts do
+    resources :likes, only: [:create, :destroy], shallow: true
     resources :comments
   end
-  resources :accounts, only: [:show]
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :accounts, only: [:show, :index]
 
-  # Defines the root path route ("/")
-  # root "articles#index"
 end

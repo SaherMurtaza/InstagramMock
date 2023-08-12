@@ -6,6 +6,8 @@ class PostsController < ApplicationController
 
   def show
     @post = current_account.posts.find(params[:id])
+    # @likes = @posts.likes.includes(:account)
+    @is_liked = @post.is_liked(current_account)
   end
 
   def new
@@ -13,6 +15,7 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @post = Post.find(params[:id])
   end
 
   def create
@@ -29,20 +32,30 @@ class PostsController < ApplicationController
     end
   end
 
+  # def update
+  #   respond_to do |format|
+  #     if @post.update(post_params)
+  #       format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
+  #       format.json { render :show, status: :ok, location: @post }
+  #     else
+  #       format.html { render :edit, status: :unprocessable_entity }
+  #       format.json { render json: @post.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
   def update
-    respond_to do |format|
-      if @post.update(post_params)
-        format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-        format.json { render :show, status: :ok, location: @post }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
-      end
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      respond_to :js
+    else
+      flash.now[:error] = "Something went wrong while updating the post."
+      render :edit
     end
-  end                            
+  end
 
   def destroy
-    @book.destroy
+    @post = Post.find(params[:id])
+    @post.destroy
 
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
@@ -57,7 +70,14 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:active, :content, :images)
+      params.require(:post).permit(:active, :caption, :location, :images)
     end
 
+    def find_post
+      @post = Post.find_by id: params[:id]
+
+      return if @post
+      flash[:danger] = "Post not exist!"
+      redirect_to root_path
+    end
 end
