@@ -6,8 +6,6 @@ class PostsController < ApplicationController
 
   def show
     @post = current_account.posts.find(params[:id])
-    # @likes = @posts.likes.includes(:account)
-    @is_liked = @post.is_liked(current_account)
   end
 
   def new
