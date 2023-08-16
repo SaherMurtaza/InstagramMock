@@ -1,13 +1,16 @@
 class LikesController < ApplicationController
   before_action :authenticate_account!
   def create
+    # @post = Post.find(params[:post_id])
+    # @like = @post.likes.build(account: current_account)
     @post = Post.find(params[:post_id])
-    @like = @post.likes.build(account: current_account)
+    @account = @post.account
+    @like = @post.likes.build(account: @account)
 
     if @like.save
-      redirect_to @post, notice: 'Post liked!'
+      redirect_back fallback_location: @post, notice: 'Post liked!'
     else
-      redirect_to @post, alert: 'Error while liking post.'
+      redirect_back fallback_location: @post, alert: 'Error while liking post.'
     end
   end
 
@@ -17,9 +20,9 @@ class LikesController < ApplicationController
 
     if @like
       @like.destroy
-      redirect_to @post, notice: 'Post unliked.'
+      redirect_back fallback_location: @post, notice: 'Post unliked.'
     else
-      redirect_to @post, alert: 'Error while unliking post.'
+      redirect_back fallback_location: @post, alert: 'Error while unliking post.'
     end
   end
 end

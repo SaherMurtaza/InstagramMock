@@ -5,7 +5,10 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = current_account.posts.find(params[:id])
+    # @account = Account.find(params[:account_id])
+    @post = Post.find(params[:id])
+
+    # @post = current_account.posts.find(params[:id])
   end
 
   def new
@@ -30,17 +33,6 @@ class PostsController < ApplicationController
     end
   end
 
-  # def update
-  #   respond_to do |format|
-  #     if @post.update(post_params)
-  #       format.html { redirect_to post_url(@post), notice: "Post was successfully updated." }
-  #       format.json { render :show, status: :ok, location: @post }
-  #     else
-  #       format.html { render :edit, status: :unprocessable_entity }
-  #       format.json { render json: @post.errors, status: :unprocessable_entity }
-  #     end
-  #   end
-  # end
   def update
     @post = Post.find(params[:id])
     if @post.update(post_params)

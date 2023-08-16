@@ -1,0 +1,5 @@
+<h2>Posts by <%= @account.name %></h2>
+<% @posts.each do |post| %>
+  <%= render post %>
+  <%= render 'likes/like_button', post: post %>
+<% end %>
