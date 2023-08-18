@@ -6,6 +6,7 @@ class SearchController < ApplicationController
       @account = []
     end
   end
+
   def show_posts
     @account = Account.find(params[:id])
     @posts = @account.posts

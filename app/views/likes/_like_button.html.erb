@@ -1,7 +1,0 @@
-<% @account = post.account%>
-<% if current_account.likes? post %>
-  <%= button_to "Unlike", post_like_path(post, post.likes.find_by(account: @account)), method: :delete %>
-<% else %>
-  <%= button_to "Like", post_likes_path(post), method: :post %>
-<% end %>
-<span class="like-count"><%= post.likes.count %> likes</span>

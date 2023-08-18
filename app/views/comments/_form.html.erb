@@ -1,0 +1,8 @@
+<div class="text-center post-container col-6" style="margin: auto;">
+  <%= form_for [@post, @comment] do |form| %>
+    <div>
+      <%= form.label :Comment, style: "display: block" %>
+      <%= form.text_field :content %>
+    </div>
+  <% end %>
+</div>

@@ -1,8 +1,8 @@
 <% if @accounts.any? %>
-  <h2>Search Results</h2>
+  <h3>Search Results</h3>
   <ul>
     <% @accounts.each do |account| %>
-      <li><%= link_to account.name, show_posts_search_path(account) %></li>
+      <%= link_to account.name, show_posts_search_path(account), class:"btn btn-secondary" %>
     <% end %>
   </ul>
 <% else %>

@@ -1,5 +1,15 @@
 <h2>Posts by <%= @account.name %></h2>
+<% if current_account.followees.include?(@account) %>
+  <%= button_to "Unfollow", unfollow_account_path, method: "POST", class:"btn btn-warning" %>
+<% else %>
+  <%= button_to "Follow", follow_account_path, method: "POST", class:"btn btn-success" %>
+<% end%>
+<br>
 <% @posts.each do |post| %>
-  <%= render post %>
-  <%= render 'likes/like_button', post: post %>
+  <div style="border: 1px solid #ccc; margin: auto; padding: 15px">
+    <%= render post %>
+    <p class="text-center post-container col-6" style="margin: auto;">
+      <%= link_to "Show this post", post, class: "btn btn-primary"%>
+    </p>
+  </div>
 <% end %>

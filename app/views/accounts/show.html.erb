@@ -1,16 +1,8 @@
-<h1> this is user's Profile page</h1>
-<br>
-<h2>Your profile details</h2>
-<p>Name: <%= @account.name %></p>
-<p>Email: <%= @account.email %></p>
-<p>Profile Privacy: <%= @account.profile_privacy.capitalize %></p>
-<br>
-<br>
-<h2>Your Posts</h2>
-<% @posts.each do |post| %>
-  <%= render post %>
-  <p>
-    <%= link_to "Show this post", post %>
-  </p>
-<% end %>
-<%= link_to "New post", new_post_path %>
+<div style="border: 1px solid #ccc">
+  <% @posts.each do |post| %>
+    <p style="border: 1px solid #ccc"><%= render post %>
+    <p class="text-center post-container col-6" style="margin: auto;">
+      <%= link_to "Show this post", post, class: "btn btn-primary"%>
+    </p></p>
+  <% end %>
+</div>

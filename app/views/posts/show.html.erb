@@ -1,7 +1,16 @@
-<%= render @post %>
-<%= render 'likes/like_button', post: @post %>
-<div>
-  <%= link_to "Edit this post", edit_post_path(@post), data: {turbo_frame: "modal"} %> <br>
-  <%= link_to "Back to posts", posts_path %>
-  <%= button_to "Destroy this post", @post, method: :delete %>
+<div style="border: 1px solid #ccc">
+  <%= render @post %>
+  <%= render 'comments/form', comment: @comment%>
+  <div class="text-center post-container col-6" style="margin: auto;">
+    <% @post.comments.each do |comment| %>
+      <%= comment.content %><br>
+    <% end %>
+  </div>
+  <% if current_account.id == @post.account.id %>
+    <div class="text-center post-container col-6" style="margin: auto;">
+      <%= link_to "Edit this post", edit_post_path(@post), data: {turbo_frame: "modal"}, class: "btn btn-primary" %>
+      <%= link_to "Back to posts", posts_path, class: "btn btn-primary" %>
+      <%= button_to "Destroy this post", @post, method: :delete, class: "btn btn-danger" %>
+    </div>
+  <% end %>
 </div>

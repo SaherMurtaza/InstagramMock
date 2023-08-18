@@ -1,9 +1,22 @@
-<p>
-  <% if post.present? %>
-    <%= image_tag post.images.representation(resize_to_limit: [600, 600]) %>
+<div id="<%= dom_id post %>" class="text-center post-container col-6" style="margin: auto;">
+  <p>
+    <% if post.present? %>
+      <% post.images.each do |image|%>
+        <%= image_tag(image, style: "max-width: 50%; height: auto; object-fit: contain;") %>
+      <%end%>
+    <% end %>
+  </p>
+  <p>
+    <strong>Caption:</strong>
+    <%= post.caption %>
+  </p>
+  <% if account_signed_in? %>
+    <% like = current_account.likes.find_by(post: post) %>
+    <% if like.nil? %>
+      <%= button_to "like", likes_path, params: { like: { post_id: post.id }}, method: :post%>
+    <% else %>
+      <%= button_to "Unlike", like_path(like), method: :delete %>
+    <% end %>
   <% end %>
-</p> 
-<p>
-  <strong>Caption:</strong>
-  <%= post.caption %>
-</p>
+  <p> <%= post.likes.count %> Likes </p>
+</div>

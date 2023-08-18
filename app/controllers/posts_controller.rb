@@ -7,7 +7,7 @@ class PostsController < ApplicationController
   def show
     # @account = Account.find(params[:account_id])
     @post = Post.find(params[:id])
-
+    @comment = @post.comments.build
     # @post = current_account.posts.find(params[:id])
   end
 
@@ -60,7 +60,7 @@ class PostsController < ApplicationController
     end
 
     def post_params
-      params.require(:post).permit(:active, :caption, :location, :images)
+      params.require(:post).permit(:active, :caption, :location, images: [])
     end
 
     def find_post

@@ -16,9 +16,19 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <%= link_to "Profile", account_path(current_account), class: "nav-link" %>
+              <%= link_to "My Posts", account_path(current_account), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "New Posts", new_post_path(current_account), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Profile", about_account_path(current_account), class: "nav-link" %>
+            </li>
+            <li class="nav-item active">
+              <%= link_to "Edit Profile", edit_account_registration_path(current_account), class: "nav-link" %>
             </li>
           </ul>
         </div>
+        <%= button_to 'Sign Out', destroy_account_session_path, method: :delete, form: {data: {turbo_confirm: 'Are you sure?'}}, class:"btn btn-danger" %>
   </nav>
 </div>

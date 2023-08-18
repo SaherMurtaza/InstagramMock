@@ -1,28 +1,17 @@
 class LikesController < ApplicationController
-  before_action :authenticate_account!
   def create
-    # @post = Post.find(params[:post_id])
-    # @like = @post.likes.build(account: current_account)
-    @post = Post.find(params[:post_id])
-    @account = @post.account
-    @like = @post.likes.build(account: @account)
-
-    if @like.save
-      redirect_back fallback_location: @post, notice: 'Post liked!'
-    else
-      redirect_back fallback_location: @post, alert: 'Error while liking post.'
-    end
+    @like = current_account.likes.new(like_params)
+    flash[:alert] = "You already liked this post" unless @like.save
+    redirect_to @like.post
   end
 
   def destroy
-    @post = Post.find(params[:post_id])
-    @like = @post.likes.find_by(account: current_account)
+    @like = current_account.likes.find(params[:id])
+    @like.destroy
+    redirect_to @like.post
+  end
 
-    if @like
-      @like.destroy
-      redirect_back fallback_location: @post, notice: 'Post unliked.'
-    else
-      redirect_back fallback_location: @post, alert: 'Error while unliking post.'
-    end
+  def like_params
+    params.require(:like).permit(:post_id)
   end
 end
