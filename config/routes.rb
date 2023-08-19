@@ -14,9 +14,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :destroy]
     resources :comments
   end
-  resources :accounts, only: [:show, :index] do
-    get 'about', on: :member
-  end
+  resources :accounts, only: [:show, :index]
   resources :likes, only: [:create, :destroy]
   post '/accounts/:id/follow', to: "accounts#follow", as: "follow_account"
   post '/accounts/:id/unfollow', to: "accounts#unfollow", as: "unfollow_account"

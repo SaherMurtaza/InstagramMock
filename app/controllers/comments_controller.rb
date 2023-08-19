@@ -34,6 +34,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = current_account.comments.find(params[:id])
     @comment.destroy
 
     respond_to do |format|

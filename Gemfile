@@ -81,4 +81,4 @@ end
 gem "devise", "~> 4.9"
 gem 'gravtastic'
 gem 'mail'
-
+gem 'popper_js'

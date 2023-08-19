@@ -299,6 +299,7 @@ DEPENDENCIES
   jquery-rails
   mail
   pg (~> 1.1)
+  popper_js
   puma (~> 5.0)
   rails (~> 7.0.6)
   rmagick

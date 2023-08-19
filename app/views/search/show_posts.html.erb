@@ -5,11 +5,11 @@
   <%= button_to "Follow", follow_account_path, method: "POST", class:"btn btn-success" %>
 <% end%>
 <br>
-<% @posts.each do |post| %>
+<% @posts.reverse_each do |post| %>
   <div style="border: 1px solid #ccc; margin: auto; padding: 15px">
     <%= render post %>
     <p class="text-center post-container col-6" style="margin: auto;">
-      <%= link_to "Show this post", post, class: "btn btn-primary"%>
+      <%= link_to "Show post", post, class: "btn btn-primary"%>
     </p>
   </div>
 <% end %>

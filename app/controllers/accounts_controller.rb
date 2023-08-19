@@ -19,16 +19,12 @@ class AccountsController < ApplicationController
     @posts = @account.visible_posts(current_account)
   end
 
-  def about
-    @account = Account.find(params[:id])
-  end
-
   def follow
     @account = Account.find(params[:id])
     current_account.followees << @account
     redirect_back(fallback_location: account_path(@account))
   end
-  
+
   def unfollow
     @account = Account.find(params[:id])
     current_account.followed_accounts.find_by(followee_id: @account.id).destroy

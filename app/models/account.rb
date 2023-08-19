@@ -9,6 +9,7 @@ class Account < ApplicationRecord
   has_many :followees, through: :followed_accounts
   has_many :following_accounts, foreign_key: :followee_id, class_name: "Relationship"
   has_many :followers, through: :following_accounts
+  has_one_attached :avatar
 
   enum profile_privacy: { public: 0, private: 1 }, _prefix: :profile
 
