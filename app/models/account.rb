@@ -36,7 +36,11 @@ class Account < ApplicationRecord
   def likes?(post)
     likes.exists?(post:)
   end
-
+  
+  def name_initials
+    initials = name.split.map { |word| word[0].capitalize }
+    initials.join
+  end
   protected
   def password_required?
     confirmed? ? super : false

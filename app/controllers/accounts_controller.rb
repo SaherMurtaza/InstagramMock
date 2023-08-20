@@ -30,4 +30,21 @@ class AccountsController < ApplicationController
     current_account.followed_accounts.find_by(followee_id: @account.id).destroy
     redirect_back(fallback_location: account_path(@account))
   end
+
+  def admin_dashboard
+    @accounts = Account.all
+    @posts = Post.all
+  end
+
+  def activate
+    account = Account.find(params[:id])
+    account.update(active: true)
+    redirect_to accounts_path, notice: 'Account activated.'
+  end
+
+  def deactivate
+    account = Account.find(params[:id])
+    account.update(active: false)
+    redirect_to accounts_path, notice: 'Account deactivated.'
+  end 
 end

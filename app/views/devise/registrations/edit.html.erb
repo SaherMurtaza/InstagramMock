@@ -4,9 +4,12 @@
   <%= render "devise/shared/error_messages", resource: resource %>
   <% if resource.avatar.attached? %>
     <%= image_tag resource.avatar, class: "rounded-circle", size: "100x100" %>
-  <%else%>
-    <%# <%= give name initials %>jjj
-  <%end%>
+  <% else %>
+    <div class="initials-placeholder">
+      <%= current_account.name_initials %>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :Avatar %><br />
     <%= f.file_field :avatar, class: "form-control" %>

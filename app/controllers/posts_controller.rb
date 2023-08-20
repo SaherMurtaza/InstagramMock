@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-
+  before_action :check_account_active, only: [:new, :create]
   def index
     @posts = current_account.posts.all
   end
@@ -70,4 +70,11 @@ class PostsController < ApplicationController
       flash[:danger] = "Post not exist!"
       redirect_to root_path
     end
+
+    def check_account_active
+      unless current_account.active?
+        redirect_to root_path, alert: 'You cannot create new posts as your account is inactive.'
+      end
+    end
+    
 end

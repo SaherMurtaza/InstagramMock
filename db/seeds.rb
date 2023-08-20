@@ -8,8 +8,9 @@
 # db/seeds.rb
 
 Account.create!(
-    email: 'admin1@example.com',
-    password: '12345',
-    # profile_privacy: :public
+    email: 'a15736611@gmail.com',
+    password: 'password1234@',
+    role: 'admin',
+    active: true
   )
   
