@@ -5,10 +5,8 @@ class PostsController < ApplicationController
   end
 
   def show
-    # @account = Account.find(params[:account_id])
     @post = Post.find(params[:id])
     @comment = @post.comments.build
-    # @post = current_account.posts.find(params[:id])
   end
 
   def new
@@ -53,28 +51,43 @@ class PostsController < ApplicationController
     end
   end
 
+  def archive
+    @post = Post.find(params[:id])
+    @post.update(archived: true)
+    redirect_to account_path(current_account), notice: 'Post archived.'
+  end
+
+  def unarchive
+    @post = Post.find(params[:id])
+    @post.update(archived: false)
+    redirect_to account_path(current_account), notice: 'Post unarchived.'
+  end
+
+  def archived
+    @archived_posts = current_account.posts.where(archived: true)
+  end
+
   private
 
-    def set_post
-      @post = Post.find(params[:id])
-    end
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    def post_params
-      params.require(:post).permit(:active, :caption, :location, images: [])
-    end
+  def post_params
+    params.require(:post).permit(:active, :caption, :location, images: [])
+  end
 
-    def find_post
-      @post = Post.find_by id: params[:id]
+  def find_post
+    @post = Post.find_by id: params[:id]
 
-      return if @post
+    return if @post
       flash[:danger] = "Post not exist!"
       redirect_to root_path
     end
 
-    def check_account_active
-      unless current_account.active?
-        redirect_to root_path, alert: 'You cannot create new posts as your account is inactive.'
-      end
+  def check_account_active
+    unless current_account.active?
+      redirect_to root_path, alert: 'You cannot create new posts as your account is inactive.'
     end
-    
+  end   
 end

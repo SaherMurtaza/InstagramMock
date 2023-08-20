@@ -13,6 +13,13 @@ Rails.application.routes.draw do
   resources :posts do
     resources :likes, only: [:create, :destroy]
     resources :comments
+    member do
+      put :archive
+      put :unarchive
+    end
+    collection do
+      get :archived
+    end
   end
   resources :accounts, only: [:show, :index] do 
     member do
