@@ -25,12 +25,12 @@
               <li class="nav-item active">
                 <%= link_to "Admin Dashboard", admin_dashboard_path(current_account), class: "nav-link" %>
               </li>
-            <% end %>  
+            <% end %>
           </ul>
             <div>
               <%= link_to root_path, id: "navbar-dropdown", class: "nav-link", data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do %>
                 <% if current_account.avatar.present? %>
-                  <%= image_tag current_account.avatar.url, class: "rounded-circle", size: "50x50" %>
+                  <%= image_tag current_account.avatar, class: "rounded-circle", size: "50x50" %>
                 <% else %>
                   <div class="initials-placeholder">
                     <%= current_account.name_initials %>

@@ -17,6 +17,9 @@ class AccountsController < ApplicationController
     # user profile
     @account = Account.find(params[:id])
     @posts = @account.visible_posts(current_account)
+    @post = Post.new
+
+    @shared_posts = @account.shared_posts
   end
 
   def follow
@@ -46,5 +49,5 @@ class AccountsController < ApplicationController
     account = Account.find(params[:id])
     account.update(active: false)
     redirect_to accounts_path, notice: 'Account deactivated.'
-  end 
+  end
 end

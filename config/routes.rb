@@ -14,21 +14,26 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :destroy]
     resources :comments
     member do
-      put :archive
-      put :unarchive
+      put :toggle_archive
     end
     collection do
       get :archived
     end
   end
-  resources :accounts, only: [:show, :index] do 
+
+  resources :accounts, only: [:show, :index] do
     member do
       put :activate
       put :deactivate
     end
-  end  
+  end
+
   resources :likes, only: [:create, :destroy]
+
   post '/accounts/:id/follow', to: "accounts#follow", as: "follow_account"
   post '/accounts/:id/unfollow', to: "accounts#unfollow", as: "unfollow_account"
   get '/accounts/:id/admin_dashboard', to: "accounts#admin_dashboard", as: "admin_dashboard"
+
+  resources :shared_posts, only: [:create, :destroy]
+
 end

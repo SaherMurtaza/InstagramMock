@@ -9,7 +9,10 @@
   <div style="border: 1px solid #ccc; margin: auto; padding: 15px">
     <%= render post %>
     <p class="text-center post-container col-6" style="margin: auto;">
-      <%= link_to "Show post", post, class: "btn btn-primary"%>
+      <div class="col-md-12 text-center">
+        <%= link_to "Show post", post, class: "btn btn-primary my-2"%>
+        <%= button_to "Share", shared_posts_path(post_id: post.id), method: :post, class: "btn btn-primary"%>
+      </div>
     </p>
   </div>
 <% end %>

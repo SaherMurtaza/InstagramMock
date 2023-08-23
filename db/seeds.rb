@@ -10,7 +10,7 @@
 Account.create!(
     email: 'a15736611@gmail.com',
     password: 'password1234@',
+    name: 'admin',
     role: 'admin',
     active: true
   )
-  

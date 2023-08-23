@@ -8,16 +8,14 @@
   </div>
   <% if current_account.id == @post.account.id %>
     <div class="text-center post-container col-6" style="margin: auto;">
-
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit Post</button>
       <%# <%= link_to "Edit this post", edit_post_path(@post) %>
-
       <%= link_to "Back to posts", posts_path, class: "btn btn-primary" %>
       <%= button_to "Destroy this post", @post, method: :delete, class: "btn btn-danger" %>
     </div>
   <% end %>
 </div>
-
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

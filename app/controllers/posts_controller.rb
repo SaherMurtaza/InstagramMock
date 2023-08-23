@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-  before_action :check_account_active, only: [:new, :create]
   def index
     @posts = current_account.posts.all
   end
@@ -18,25 +17,26 @@ class PostsController < ApplicationController
   end
 
   def create
+    # debugger
     @post = Post.new(post_params.merge(account_id: current_account.id))
-
-    respond_to do |format|
-      if @post.save
-        format.html { redirect_to post_url(@post), notice: "Post was successfully created." }
-        format.json { render :show, status: :created, location: @post }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @post.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @post.save
+          format.js
+          format.html { redirect_to posts_url, notice: 'Post created.' }
+        else
+          alert("problem")
+        end
       end
-    end
+
   end
 
   def update
     @post = Post.find(params[:id])
+
     if @post.update(post_params)
       respond_to :js
     else
-      flash.now[:error] = "Something went wrong while updating the post."
+      flash.now[:error] = 'Something went wrong while updating the post.'
       render :edit
     end
   end
@@ -46,21 +46,16 @@ class PostsController < ApplicationController
     @post.destroy
 
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
-  def archive
+  def toggle_archive
     @post = Post.find(params[:id])
-    @post.update(archived: true)
-    redirect_to account_path(current_account), notice: 'Post archived.'
-  end
+    @post.toggle!(:archived)
 
-  def unarchive
-    @post = Post.find(params[:id])
-    @post.update(archived: false)
-    redirect_to account_path(current_account), notice: 'Post unarchived.'
+    redirect_to account_path(current_account)
   end
 
   def archived
@@ -74,20 +69,14 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:active, :caption, :location, images: [])
+    params.permit(:active, :caption, :location, images: [])
   end
 
   def find_post
     @post = Post.find_by id: params[:id]
 
     return if @post
-      flash[:danger] = "Post not exist!"
+      flash[:danger] = 'Post does not exist!'
       redirect_to root_path
     end
-
-  def check_account_active
-    unless current_account.active?
-      redirect_to root_path, alert: 'You cannot create new posts as your account is inactive.'
-    end
-  end   
-end
+  end

@@ -1,37 +1,40 @@
 <h3> All Users </h3>
-    <table class="accounts-table">
-    <thead>
+
+<table class="accounts-table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @accounts.each do |account| %>
       <tr>
-        <th>Email</th>
-        <th>Role</th>
-        <th>Status</th>
-        <th>Actions</th>
+        <td><%= account.email %></td>
+        <td><%= account.role %></td>
+        <td><%= account.active ? 'Active' : 'Inactive' %></td>
+        <td>
+          <% if account.active %>
+            <%= button_to 'Deactivate', deactivate_account_path(account), method: :put, class: 'btn btn-danger' %>
+          <% else %>
+            <%= button_to 'Activate', activate_account_path(account), method: :put, class: 'btn btn-success' %>
+          <% end %>
+        </td>
       </tr>
-    </thead>
-    <tbody>
-      <% @accounts.each do |account| %>
-        <tr>
-          <td><%= account.email %></td>
-          <td><%= account.role %></td>
-          <td><%= account.active ? 'Active' : 'Inactive' %></td>
-          <td>
-            <% if account.active %>
-              <%= button_to 'Deactivate', deactivate_account_path(account), method: :put, class: 'btn btn-danger' %>
-            <% else %>
-              <%= button_to 'Activate', activate_account_path(account), method: :put, class: 'btn btn-success' %>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>  
-<br>  
-<h3>All Posts</h3>
-<div style="border: 1px solid #ccc" class="text-center" style="margin: auto;">
-    <% @posts.each do |post| %>
-        <p style="border: 1px solid #ccc">
-            <%= render post %>
-            <%= link_to "Show this post", post, class: "btn btn-primary" %>
-        </p>
     <% end %>
+  </tbody>
+</table>
+
+<h3>All Posts</h3>
+
+<div style="border: 1px solid #ccc" class="text-center" style="margin: auto;">
+  <% @posts.each do |post| %>
+    <p style="border: 1px solid #ccc">
+      <%= render post %>
+      <%= link_to "Show this post", post, class: "btn btn-primary" %>
+    </p>
+  <% end %>
 </div>

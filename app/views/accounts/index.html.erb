@@ -1,5 +1,6 @@
 <% if @suggested_posts %>
   <h3>Suggested for you</h3>
+  
   <% @suggested_posts.reverse_each do |post| %>
     <div style="border: 1px solid #ccc">
       <%= render post %>
@@ -7,6 +8,7 @@
   <% end %>
 <% else %>
   <h3>Your Following's Posts</h3>
+
   <% @following_posts.reverse_each do |post| %>
     <div style="border: 1px solid #ccc">
       <%= render post %>
