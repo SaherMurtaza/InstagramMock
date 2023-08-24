@@ -3,6 +3,7 @@
   <ul>
     <% @accounts.each do |account| %>
       <%= link_to account.name, show_posts_search_path(account), class:"btn btn-secondary" %>
+      followers: <%= account.followers.count %>
     <% end %>
   </ul>
 <% else %>

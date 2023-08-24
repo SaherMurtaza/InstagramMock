@@ -1,8 +1,101 @@
+<div class="d-flex justify-content-center gap-2 my-3">
+  <%# <%= link_to "Create New Posts", new_post_path(current_account), class: "btn btn-primary btn-lg", id:"openNewPostModal" %>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#newPostModal" id="openNewPostModal">Add New Post</button>
+  <%= link_to "Archived Posts", archived_posts_path(current_account), class: "btn btn-info btn-lg" %>
+</div>
+
+<% @shared_posts.reverse_each do |shared_post| %>
+  <%= render "posts/shared_post", post: shared_post %>
+  <div class="col-md-12 text-center">
+    <%= button_to "Remove post", shared_post, method: :delete, class: "btn btn-danger" %>
+  </div>
+<% end %>
+
 <div style="border: 1px solid #ccc">
-  <% @posts.each do |post| %>
-    <p style="border: 1px solid #ccc"><%= render post %>
-    <p class="text-center post-container col-6" style="margin: auto;">
-      <%= link_to "Show this post", post, class: "btn btn-primary"%>
-    </p></p>
+  <% @posts.reverse_each do |post| %>
+    <% unless post.archived %>
+      <p style="border: 1px solid #ccc">
+        <%= render post %>
+      <div class="text-center post-container col-6 my-3" style="margin: auto;">
+        <%= link_to "Show post", post, class: "btn btn-primary my-1"%>
+        <%= button_to 'Archive post', toggle_archive_post_path(post), method: :put, class: "btn btn-warning" %>
+      </div>
+      </p>
+    <% end %>
   <% end %>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="newPostModal" tabindex="-1" role="dialog" aria-labelledby="newPostModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <%= form_with(model: @post, remote: :true,  authenticity_token: true, url: posts_path, method: :post, id: "form") do |form| %>
+          <div>
+            <%= form.label :images, style: "display: block" %>
+            <%= form.file_field :images, multiple: true, class: 'form-control' ,id:"images"%>
+          </div>
+          <div>
+            <%= form.label :caption, style: "display: block" %>
+            <%= form.text_field :caption, class: 'form-control',id:"caption" %>
+          </div>
+          <%= form.submit 'Create Post', id: "submitForm", class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%# <script>
+  var data=document.getElementById('submitForm')
+  data.addEventListener('click',(e)=>{
+    e.preventDefault();
+    var token = document.getElementsByName('csrf-token')[0].content;
+
+    // var formData = {
+    //     images: $("#images").val(),
+    //     caption: $("#caption").val(),
+    //   };
+    // var form = document.getElementById('form');
+    // var formData = new FormData(form);
+    var images=document.getElementById("images")
+    var caption=document.getElementById("caption")
+
+    console.log("Hi Hi")
+
+    $.ajax({
+      url: '/posts',
+      method: 'POST',
+      headers: {
+          'X-CSRF-Token': token,
+      },
+      // data: formData
+
+      data: {images: images.value,caption: caption.value}
+    });
+     });
+</script> %>
+<script>
+  var token = document.getElementsByName('csrf-token')[0].content;
+  $(document).ready(function () {
+    $("form").submit(function (event) {
+      var formData = {
+        images: $("#images").val(),
+        caption: $("#caption").val(),
+      };
+
+      $.ajax({
+        method: 'POST',
+        url: "/posts",
+        data: formData,
+        headers: {
+          'X-CSRF-Token': token
+          },
+      }).done(function (data) {
+        console.log(data);
+      });
+
+      event.preventDefault();
+    });
+  });
+</script>

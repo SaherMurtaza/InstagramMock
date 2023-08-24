@@ -17,10 +17,9 @@ class AccountsController < ApplicationController
     # user profile
     @account = Account.find(params[:id])
     @posts = @account.visible_posts(current_account)
-  end
+    @post = Post.new
 
-  def about
-    @account = Account.find(params[:id])
+    @shared_posts = @account.shared_posts
   end
 
   def follow
@@ -28,10 +27,27 @@ class AccountsController < ApplicationController
     current_account.followees << @account
     redirect_back(fallback_location: account_path(@account))
   end
-  
+
   def unfollow
     @account = Account.find(params[:id])
     current_account.followed_accounts.find_by(followee_id: @account.id).destroy
     redirect_back(fallback_location: account_path(@account))
+  end
+
+  def admin_dashboard
+    @accounts = Account.all
+    @posts = Post.all
+  end
+
+  def activate
+    account = Account.find(params[:id])
+    account.update(active: true)
+    redirect_to accounts_path, notice: 'Account activated.'
+  end
+
+  def deactivate
+    account = Account.find(params[:id])
+    account.update(active: false)
+    redirect_to accounts_path, notice: 'Account deactivated.'
   end
 end

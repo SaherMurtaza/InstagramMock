@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
     @comment = @post.comments.build(comment_params.merge(account_id: current_account.id))
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to post_path(@post.id), notice: "Comment was successfully created." }
+        format.html { redirect_to post_path(@post.id), notice: 'Comment was successfully created.' }
         format.json { render :show, status: :created, location: @comment }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
   def update
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to comment_url(@comment), notice: "Comment was successfully updated." }
+        format.html { redirect_to comment_url(@comment), notice: 'Comment was successfully updated.' }
         format.json { render :show, status: :ok, location: @comment }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -34,10 +34,11 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = current_account.comments.find(params[:id])
     @comment.destroy
 
     respond_to do |format|
-      format.html { redirect_to comments_url, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to comments_url, notice: 'Comment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

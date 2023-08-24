@@ -10,6 +10,10 @@ class Account < ApplicationRecord
   has_many :following_accounts, foreign_key: :followee_id, class_name: "Relationship"
   has_many :followers, through: :following_accounts
 
+  has_one_attached :avatar
+
+  has_many :shared_posts
+
   enum profile_privacy: { public: 0, private: 1 }, _prefix: :profile
 
   scope :public_accounts_with_most_followers, lambda {
@@ -21,22 +25,23 @@ class Account < ApplicationRecord
   }
 
   def visible_posts(current_account)
-    if profile_privacy == 'public'
-      Post.where(account_id: id)
-    elsif profile_privacy == 'private'
+    if profile_public?
+      posts
+    elsif profile_private?
       if current_account && (current_account == self || current_account.followers?(self))
-        Post.where(account_id: id)
+        posts
       else
-        Post.none
+        []
       end
     end
   end
 
-  def likes?(post)
-    likes.exists?(post:)
+  def name_initials
+    name.split.map { |word| word[0].capitalize }.join
   end
 
   protected
+
   def password_required?
     confirmed? ? super : false
   end

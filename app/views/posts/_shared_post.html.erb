@@ -1,4 +1,6 @@
-<div id="<%= dom_id post %>" class="text-center post-container col-6 card mt-3" style="margin: auto;">
+<% post = Post.find(post.post_id) %>
+<div class="text-center post-container col-6 card mt-3" style="margin: auto;">
+  <h3>Shared Post</h3>
   <p>
     <% if post.present? %>
       <% post.images.each do |image|%>
@@ -14,6 +16,10 @@
     <strong>Caption:</strong>
     <%= post.caption %>
   </p>
+  <p>
+    <strong>Post by:</strong>
+    <%= post.account.name %>
+  </p>
   <% if account_signed_in? %>
     <% like = current_account.likes.find_by(post: post) %>
     <% if like.nil? %>
@@ -24,25 +30,3 @@
   <% end %>
   <p> <%= post.likes.count %> Likes </p>
 </div>
-<script>
-// In your application.js or another JavaScript file
-$(document).on("click", ".like-button", function(e) {
-  e.preventDefault();
-
-  var $this = $(this);
-  var postUrl = $this.data("url");
-
-  $.ajax({
-    type: "POST",  // Change to "DELETE" for unlike
-    url: postUrl,
-    dataType: "script",  // This expects a JavaScript response
-    success: function(response) {
-      // Update UI as needed
-    },
-    error: function(xhr, textStatus, errorThrown) {
-      // Handle error
-    }
-  });
-});
-
-</script>

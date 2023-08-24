@@ -1,4 +1,7 @@
-<%= render "form", post: @post %>
 <div>
-  <%= link_to "Back to posts", posts_path %>
+  <%= render "form", post: @post %>
+  
+  <div>
+    <%= link_to "Back to posts", posts_path, class: "btn btn-primary" %>
+  </div>
 </div>

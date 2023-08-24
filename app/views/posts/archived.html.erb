@@ -1,0 +1,8 @@
+<div style="border: 1px solid #ccc" class="text-center" style="margin: auto;">
+  <% @archived_posts.each do |post| %>
+    <p style="border: 1px solid #ccc">
+    <%= render post %>
+    <%= button_to 'Unarchive', toggle_archive_post_path(post), method: :put, class: "btn btn-success mt-2" %>
+    <%= link_to "Show this post", post, class: "btn btn-primary my-1" %>
+  <% end %>
+</div>

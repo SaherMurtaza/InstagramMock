@@ -2,15 +2,41 @@
   <%= render @post %>
   <%= render 'comments/form', comment: @comment%>
   <div class="text-center post-container col-6" style="margin: auto;">
-    <% @post.comments.each do |comment| %>
-      <%= comment.content %><br>
+    <% @post.comments.reverse_each do |comment| %>
+      <%= comment.content %>
     <% end %>
   </div>
   <% if current_account.id == @post.account.id %>
     <div class="text-center post-container col-6" style="margin: auto;">
-      <%= link_to "Edit this post", edit_post_path(@post), data: {turbo_frame: "modal"}, class: "btn btn-primary" %>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Edit Post</button>
+      <%# <%= link_to "Edit this post", edit_post_path(@post) %>
       <%= link_to "Back to posts", posts_path, class: "btn btn-primary" %>
       <%= button_to "Destroy this post", @post, method: :delete, class: "btn btn-danger" %>
     </div>
   <% end %>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="caption" class="col-form-label">Caption:</label>
+            <input type="text" class="form-control" id="caption">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Update Caption</button>
+      </div>
+    </div>
+  </div>
 </div>
